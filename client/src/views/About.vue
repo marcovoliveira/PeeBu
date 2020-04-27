@@ -1,5 +1,6 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <h1>Marco - 2192406</h1>
+    <h1>Olek - 2192406</h1>
   </div>
 </template>
