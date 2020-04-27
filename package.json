@@ -1,17 +1,27 @@
 {
   "name": "PeeBu",
-  "version": "0.0.1",
-  "description": "",
+  "version": "1.0.0",
+  "description": "PeeBu Application",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Marco Oliveira, Oleksandr Gevko",
-  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcovoliveira/PeeBu.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marcovoliveira/PeeBu/issues"
+  },
+  "homepage": "https://github.com/marcovoliveira/PeeBu#readme",
   "dependencies": {
+    "@vue/cli": "^4.3.1",
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mongodb": "^3.5.5",
-    "request": "^2.88.2"
+    "morgan": "^1.10.0"
   }
 }

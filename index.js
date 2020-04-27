@@ -1,19 +1,21 @@
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
-const request = require('request');
-const path = require('path')
-//const mongo = require('./database.js');
+const morgan = require('morgan');
 
-const start = async () => {
-    const app = express();
-    const port = 8080;
-    //const db = await mongo.connect();
+const app = express();
 
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: true }));
+app.use(morgan('tiny'));
+app.use(cors());
+app.use(bodyParser.json());
 
-    app.use('/', express.static(path.join(__dirname, '/public')))
-    app.listen(port, () => console.log(`Book Manager API listening on port ${port}`));
-}
+app.get('/', (req, res) => {
+    res.json({
+        message: 'PeeBu!'
+    });
+});
 
-start();
+const port = process.env.PORT || 4000;
+app.listen(port, () => {
+    console.log(`listening on ${port}`);
+});
