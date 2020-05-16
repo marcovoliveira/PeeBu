@@ -6,7 +6,7 @@
       clipped
     >
       <v-list dense>
-        <v-list-item link>
+        <v-list-item :to="'Transactions'" link>
           <v-list-item-action>
             <v-icon>mdi-view-dashboard</v-icon>
           </v-list-item-action>
@@ -14,7 +14,7 @@
             <v-list-item-title>Dashboard</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item :to="'More'" link>
           <v-list-item-action>
             <v-icon>mdi-settings</v-icon>
           </v-list-item-action>
@@ -24,7 +24,6 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-
     <v-app-bar
       app
       clipped-left
@@ -32,23 +31,17 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title>{{title}}</v-toolbar-title>
     </v-app-bar>
-
-        <v-tabs>
-    <v-tab>Transictions</v-tab>
-    <v-tab>More</v-tab>
-  </v-tabs>
-
+    <router-view/>
+    
     <v-footer app>
-      <span>&copy; 2019</span>
+      <span>&copy; 2020</span>
     </v-footer>
   </v-app>
 </template>
 
 <script>
+//import About from '../views/About.vue'
   export default {
-    props: {
-      source: String,
-    },
     data: () => ({
       drawer: null,
       title: 'PeeBu'
