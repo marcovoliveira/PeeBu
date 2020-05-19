@@ -3,6 +3,20 @@
     <v-card-title>
       Transactions
       <v-spacer></v-spacer>
+      <v-expansion-panels hover>
+      <v-expansion-panel>
+      <v-expansion-panel-header>Filters</v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <v-col cols="12" sm="6" md="3">
+            <v-text-field
+              v-model="entity"
+              label="Entity"
+              outlined
+            ></v-text-field>
+          </v-col>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+      </v-expansion-panels>
       <v-text-field
         v-model="search"
         append-icon="mdi-magnify"
@@ -13,7 +27,7 @@
     </v-card-title>
     <v-data-table
       :headers="headers"
-      :items="results"
+      :items="transactions"
       :search="search"
     ></v-data-table>
   </v-card>
@@ -24,7 +38,9 @@
     data () {
       return {
         search: '',
+        entity: '',
         results: [],
+        transactions: [],
         headers: [
           { text: 'Id', align: 'start',  value: 'id' },
           { text: 'Entity', value: 'entity',},
@@ -38,7 +54,17 @@
      mounted () {
      this.axios.get("https://5e5d229a97d2ea00147971d0.mockapi.io/sq/transactions").then((response) => {
         this.results = response.data;
+        this.transactions = response.data;
       })
+    },    
+
+
+    watch: {
+      entity: function(val) {
+        this.transactions =  this.results.filter(function(transaction) {
+          return transaction.entity.includes(val);
+        })
+        }
+      }
     }
-  }
 </script>
