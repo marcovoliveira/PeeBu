@@ -65,7 +65,40 @@
       :headers="headers"
       :items="transactions"
       :search="search"
-    ></v-data-table>
+    >
+      <template v-slot:item.category="props">
+        <v-edit-dialog
+          :return-value.sync="props.item.category"
+          large
+          persistent
+          @save="save"
+          @cancel="cancel"
+          @open="open"
+          @close="close"
+        >
+          <div>{{ props.item.category.text }}</div>
+          <template v-slot:input>
+            <div class="mt-4 title">Update Category</div>
+          </template>
+          <template v-slot:input>
+            <v-select
+              v-model="props.item.category"
+              :items="categories"
+              item-text="text"
+              item-value="id"
+              filled
+              label="Category"
+              return-object
+              autofocus
+            ></v-select>
+          </template>
+        </v-edit-dialog>
+      </template>
+    </v-data-table>
+    <v-snackbar v-model="category" :timeout="3000" :color="categoryColor">
+        {{ categoryText }}
+        <v-btn text @click="category = false">Close</v-btn>
+    </v-snackbar>
   </v-card>
   </div>
 </template>
@@ -74,12 +107,24 @@ export default {
     name: 'Transactions',
     data () {
       return {
+        category: false,
+        categoryColor: '',
+        categoryText: '',
         search: '',
         source: '',
         entity: '',
         dates: [],
         menu: false,
         results: [],
+        categories: [
+          {id: 1, text: "Food"},
+          {id: 2, text: "Education"},
+          {id: 3, text: "Health"},
+          {id: 4, text: "Household"},
+          {id: 5, text: "Entertainment"},
+          {id: 6, text: "Transportation"},
+          {id: 7, text: "Vet"},
+        ],
         headers: [
           { text: 'Id', align: 'start',  value: 'id' },
           { text: 'Entity', value: 'entity',
@@ -102,8 +147,30 @@ export default {
               return new Date(value).getTime() >= new Date(this.dates[0]).getTime() && new Date(value).getTime() <= new Date(this.dates[1]).getTime();
            } 
           },
+          { text: 'Category', value: 'category' },
         ],
       }
+    },
+    methods: {
+      save () {
+        this.$store.commit('addTransactions', this.transactions)
+        this.category = true
+        this.categoryColor = 'success'
+        this.categoryText = 'Data saved'
+      },
+      cancel () {
+        this.category = true
+        this.categoryColor = 'error'
+        this.categoryText = 'Canceled'
+      },
+      open () {
+        this.category = true
+        this.categoryColor = 'info'
+        this.categoryText = 'Dialog opened'
+      },
+      close () {
+        console.log('Dialog closed')
+      },
     },
     mounted() {
       const store = this.$store; 
@@ -111,6 +178,9 @@ export default {
       if(store.getters.transactionList < 1){
         console.log("Get transactions")
         this.axios.get("https://5e5d229a97d2ea00147971d0.mockapi.io/sq/transactions").then((response) => {
+          response.data.forEach(element => {
+            element.category = ''
+          });
           store.commit('addTransactions', response.data)
           
         })
