@@ -117,6 +117,7 @@ export default {
         menu: false,
         results: [],
         categories: [
+          {id: 0, text: "Choose a category..."},
           {id: 1, text: "Food"},
           {id: 2, text: "Education"},
           {id: 3, text: "Health"},
@@ -179,7 +180,7 @@ export default {
         console.log("Get transactions")
         this.axios.get("https://5e5d229a97d2ea00147971d0.mockapi.io/sq/transactions").then((response) => {
           response.data.forEach(element => {
-            element.category = ''
+            element.category = this.categories[0]
           });
           store.commit('addTransactions', response.data)
           
