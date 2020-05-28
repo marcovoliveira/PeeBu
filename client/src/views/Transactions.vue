@@ -95,7 +95,7 @@
         </v-edit-dialog>
       </template>
     </v-data-table>
-    <v-snackbar v-model="category" :timeout="3000" :color="categoryColor">
+    <v-snackbar v-model="category" :timeout="6000" :color="categoryColor">
         {{ categoryText }}
         <v-btn text @click="category = false">Close</v-btn>
     </v-snackbar>
