@@ -9,19 +9,32 @@
       <v-expansion-panel-header>Filters</v-expansion-panel-header>
         <v-expansion-panel-content>
           <v-row>
+          <v-col class="d-flex" cols="6" sm="3">
             <v-text-field
               v-model="entity"
               label="Entity"
               clearable
               outlined
             ></v-text-field>
+          </v-col>
+          <v-col class="d-flex" cols="6" sm="3">  
             <v-text-field
-              class="ps-3"
               v-model="source"
               label="Source"
               clearable
               outlined
             ></v-text-field>
+          </v-col>
+          <v-col class="d-flex" cols="6" sm="3">
+            <v-select
+              v-model="filterCategory"
+              :items="categories"
+              label="Categories"
+              clearable
+              outlined
+            ></v-select>
+          </v-col>
+          <v-col class="d-flex" cols="6" sm="3">
             <v-menu
               ref="menu"
               v-model="menu"
@@ -33,14 +46,13 @@
             >
               <template v-slot:activator="{ on }">
                 <v-text-field
-                  class="ps-3"
                   v-model="dateRangeText"
                   label="Filter by dates"
-                  prepend-icon="event"
                   readonly
                   clearable
                   @click:clear="dates = [] "
                   v-on="on"
+                  outlined
                 ></v-text-field>
               </template>
               <v-date-picker v-model="dates" no-title scrollable range>
@@ -49,6 +61,7 @@
                 <v-btn text color="primary" @click="$refs.menu.save(dates)">OK</v-btn>
               </v-date-picker>
             </v-menu>
+          </v-col>
           </v-row>
         </v-expansion-panel-content>
       </v-expansion-panel>
@@ -110,6 +123,7 @@ export default {
         category: false,
         categoryColor: '',
         categoryText: '',
+        filterCategory: '',
         search: '',
         source: '',
         entity: '',
@@ -148,7 +162,11 @@ export default {
               return new Date(value).getTime() >= new Date(this.dates[0]).getTime() && new Date(value).getTime() <= new Date(this.dates[1]).getTime();
            } 
           },
-          { text: 'Category', value: 'category' },
+          { text: 'Category', value: 'category', 
+            filter: value => {
+              if (!this.filterCategory) return true
+              return value.text === this.filterCategory;
+           } },
         ],
       }
     },
