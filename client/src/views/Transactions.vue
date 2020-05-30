@@ -89,7 +89,7 @@
           @open="open"
           @close="close"
         >
-          <div>{{ props.item.category.text }}</div>
+          <div>{{ props.item.category }}</div>
           <template v-slot:input>
             <div class="mt-4 title">Update Category</div>
           </template>
@@ -97,11 +97,8 @@
             <v-select
               v-model="props.item.category"
               :items="categories"
-              item-text="text"
-              item-value="id"
               filled
               label="Category"
-              return-object
               autofocus
             ></v-select>
           </template>
@@ -131,14 +128,14 @@ export default {
         menu: false,
         results: [],
         categories: [
-          {id: 0, text: "Choose a category..."},
-          {id: 1, text: "Food"},
-          {id: 2, text: "Education"},
-          {id: 3, text: "Health"},
-          {id: 4, text: "Household"},
-          {id: 5, text: "Entertainment"},
-          {id: 6, text: "Transportation"},
-          {id: 7, text: "Vet"},
+          "Choose a category...",
+          "Food",
+          "Education",
+          "Health",
+          "Household",
+          "Entertainment",
+          "Transportation",
+          "Vet",
         ],
         headers: [
           { text: 'Id', align: 'start',  value: 'id' },
@@ -162,10 +159,10 @@ export default {
               return new Date(value).getTime() >= new Date(this.dates[0]).getTime() && new Date(value).getTime() <= new Date(this.dates[1]).getTime();
            } 
           },
-          { text: 'Category', value: 'category', 
+          { text: 'Category', value: 'category',
             filter: value => {
               if (!this.filterCategory) return true
-              return value.text === this.filterCategory;
+              return value === this.filterCategory;
            } },
         ],
       }
