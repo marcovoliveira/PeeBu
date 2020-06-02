@@ -1,0 +1,6 @@
+projectKey=team9_2020
+serverUrl=https://sonar.creis.pt
+serverVersion=8.3.1.34397
+dashboardUrl=https://sonar.creis.pt/dashboard?id=team9_2020
+ceTaskId=AXJxJtR9e08LEcP0LhtF
+ceTaskUrl=https://sonar.creis.pt/api/ce/task?id=AXJxJtR9e08LEcP0LhtF
