@@ -14,7 +14,7 @@
             <v-list-item-title>Dashboard</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item :to="'More'" link>
+        <v-list-item :to="'Settings'" link>
           <v-list-item-action>
             <v-icon>mdi-settings</v-icon>
           </v-list-item-action>
