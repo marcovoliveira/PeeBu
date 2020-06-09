@@ -7,11 +7,15 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
+    api: 'https://5e5d229a97d2ea00147971d0.mockapi.io/sq/transactions',
     transactions: []
   },
   mutations: {
     addTransactions(state, transactions) {
       state.transactions = transactions;
+    },
+    addApi(state, api){
+      state.api = api;
     }
   },
   actions: {
@@ -21,6 +25,9 @@ export default new Vuex.Store({
   getters: {
     transactionList: state => {
       return state.transactions
+    },
+    api: state => {
+      return state.api
     }
   }
 })

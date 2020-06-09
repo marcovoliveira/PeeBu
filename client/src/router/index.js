@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import About from '../views/About.vue'
 import Transactions from '../views/Transactions.vue'
+import Settings from '../views/Settings.vue'
 import More from '../views/More.vue'
 
 
@@ -22,6 +23,11 @@ const routes = [
     path: '/more',
     name: 'more',
     component: More
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: Settings
   },
   {
     path: '/about',
