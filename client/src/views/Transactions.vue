@@ -3,9 +3,30 @@
     <v-container>
       <v-card-title>
         Transactions
-        
         <v-spacer></v-spacer>
-        <v-btn @click="getTransactions()" right small class="ma-2" title="Refresh data from api" outlined fab color="grey">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <div v-on="on" v-bind="attrs">
+              <v-switch v-model="automaticCategorize" label="Automatic categorization"></v-switch>
+            </div>
+          </template>
+          <span>
+            If this option is activated when you categorize a transaction all uncategorized transactions
+            from the same entity will be automatically categorized
+          </span>
+        </v-tooltip>
+
+        <v-spacer></v-spacer>
+        <v-btn
+          @click="getTransactions()"
+          right
+          small
+          class="ma-2"
+          title="Refresh data from api"
+          outlined
+          fab
+          color="grey"
+        >
           <v-icon>mdi-refresh</v-icon>
         </v-btn>
         <v-expansion-panels hover>
@@ -74,7 +95,7 @@
             :return-value.sync="props.item.category"
             large
             persistent
-            @save="save"
+            @save="save(props.item)"
             @cancel="cancel"
             @open="open"
             @close="close"
@@ -107,6 +128,7 @@ export default {
   name: "Transactions",
   data() {
     return {
+      automaticCategorize: false,
       category: false,
       categoryColor: "",
       categoryText: "",
@@ -177,7 +199,14 @@ export default {
     };
   },
   methods: {
-    save() {
+    save(item) {
+      if (this.automaticCategorize) {
+        this.transactions.map(function(el) {
+          if (el.entity == item.entity) {
+            el.category = item.category;
+          }
+        });
+      }
       this.$store.commit("addTransactions", this.transactions);
       this.category = true;
       this.categoryColor = "success";
@@ -199,17 +228,20 @@ export default {
     getTransactions() {
       const store = this.$store;
       console.log("Get transactions");
-      this.axios.get(store.getters.api).then(response => {
-        response.data.forEach(element => {
-          element.category = this.categories[0];
+      this.axios
+        .get(store.getters.api)
+        .then(response => {
+          response.data.forEach(element => {
+            element.category = this.categories[0];
+          });
+          store.commit("addTransactions", response.data);
+        })
+        .catch(error => {
+          this.category = true;
+          this.categoryColor = "error";
+          this.categoryText = "Refresh failed: " + error.message;
         });
-        store.commit("addTransactions", response.data);
-      }).catch((error) =>  {
-        this.category = true;
-        this.categoryColor = "error";
-        this.categoryText = "Refresh failed: " + error.message;
-      });
-    },
+    }
   },
   mounted() {
     const store = this.$store;
