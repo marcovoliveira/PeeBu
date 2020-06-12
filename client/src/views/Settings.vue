@@ -3,7 +3,7 @@
     <v-container fluid>
       <v-card-title>Settings</v-card-title>
       <v-col cols="12" sm="6">
-        <v-text-field v-model="api" label="API" clearable outlined></v-text-field>
+        <v-text-field id="apiText" v-model="api" label="API" clearable outlined></v-text-field>
         <v-btn @click="updateApi()">Update</v-btn>
         <v-snackbar v-model="snackbar">
           {{ textSnack }}
@@ -27,7 +27,6 @@ export default {
   },
   methods: {
     updateApi() {
-      console.log("oi");
       try {
         this.textSnack = "Api url updated!";
         this.typeSnack = "success";
@@ -37,8 +36,7 @@ export default {
         this.typeSnack = "error";
       }
       this.snackbar = true;
-
-    }
+    },
   },
   mounted() {
     this.api = this.$store.getters.api;
