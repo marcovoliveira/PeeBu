@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import About from '../views/About.vue'
 import Transactions from '../views/Transactions.vue'
 import Settings from '../views/Settings.vue'
-import More from '../views/More.vue'
+import Statistics from '../views/Statistics.vue'
 
 
 Vue.use(VueRouter)
@@ -20,9 +20,9 @@ const routes = [
     component: Transactions
   },
   {
-    path: '/more',
-    name: 'more',
-    component: More
+    path: '/statistics',
+    name: 'Statistics',
+    component: Statistics
   },
   {
     path: '/settings',

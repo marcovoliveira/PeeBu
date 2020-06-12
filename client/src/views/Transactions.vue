@@ -7,7 +7,7 @@
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
             <div v-on="on" v-bind="attrs">
-              <v-switch v-model="automaticCategorize" label="Automatic categorization"></v-switch>
+              <v-switch id="automatic" v-model="automaticCategorize" label="Automatic categorization"></v-switch>
             </div>
           </template>
           <span>
@@ -106,6 +106,7 @@
             </template>
             <template v-slot:input>
               <v-select
+                id="categorySelector"
                 v-model="props.item.category"
                 :items="categories"
                 filled
