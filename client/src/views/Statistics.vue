@@ -93,6 +93,18 @@
           </v-card>
         </v-col>
       </v-row>
+      <v-row>
+        <v-col>
+          <v-card>
+            <v-card-text v-if="chartReady">
+                <span id='chartData'
+                style="display:none">{{JSON.stringify(this.categories)}}</span>
+              <highcharts id="chartPie" class="chart" :alt="JSON.stringify(this.categories)" :options="chartOptions"></highcharts>
+            </v-card-text>
+          </v-card>
+        </v-col>
+        <v-col></v-col>
+      </v-row>
     </v-container>
   </div>
 </template>
@@ -102,11 +114,48 @@ export default {
   name: "Statistics",
   data() {
     return {
+      chartReady: false,
+      categories: [1],
       api: "",
       search: "",
       typeSnack: "Success",
       snackbar: false,
       textSnack: "",
+      chartOptions: {
+        title: {
+          text: "Expenses"
+        },
+        tooltip: {
+          pointFormat: "{point.y}€ - <b>{point.percentage:.1f}%</b>"
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: "pointer",
+            dataLabels: {
+              enabled: true,
+              format: "<b>{point.name}</b>: {point.percentage:.1f}%"
+            }
+          }
+        },
+        credits: {
+          enabled: false
+        },
+        exporting: {
+          enabled: true
+        },
+        chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: "pie"
+        },
+        series: [
+          {
+            data: [1]
+          }
+        ]
+      },
       headers: [
         { text: "Id", align: "start", value: "id" },
         {
@@ -131,6 +180,28 @@ export default {
     };
   },
   methods: {
+    chartData() {
+      let arrayDebit = this.$store.getters.transactionList.filter(
+        this.filterDebit
+      );
+      console.log(arrayDebit);
+
+      let categories = [];
+      for (let i = 0; i < arrayDebit.length; i++) {
+        let obj = categories.find(o => o.name === arrayDebit[i].category);
+        if (obj) {
+          obj.y += parseFloat(arrayDebit[i].amount);
+        } else {
+          categories.push({
+            name: arrayDebit[i].category,
+            y: parseFloat(arrayDebit[i].amount)
+          });
+        }
+      }
+      this.chartOptions.series[0].data = categories;
+      this.categories = categories;
+      this.chartReady = true;
+    },
     updateApi() {
       try {
         this.textSnack = "Api url updated!";
@@ -148,8 +219,13 @@ export default {
       }
       return true;
     },
+
     filterDebit(obj) {
-      if (obj.type === "credit" || obj.type === "invoice"  || obj.category === "Choose a category...") {
+      if (
+        obj.type === "credit" ||
+        obj.type === "invoice" ||
+        obj.category === "Choose a category..."
+      ) {
         return false;
       }
       return true;
@@ -163,6 +239,7 @@ export default {
   },
   mounted() {
     this.api = this.$store.getters.api;
+    this.chartData();
   },
   computed: {
     transactions() {
@@ -190,3 +267,5 @@ export default {
   watch: {}
 };
 </script>
+<style scoped>
+</style>
