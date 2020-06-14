@@ -84,7 +84,7 @@
         <v-text-field
           v-model="search"
           append-icon="mdi-magnify"
-          label="Id, ammount, type..."
+          label="Id, amount, type..."
           single-line
           hide-details
         ></v-text-field>
@@ -233,7 +233,9 @@ export default {
         .get(store.getters.api)
         .then(response => {
           response.data.forEach(element => {
-            element.category = this.categories[0];
+            if(!element.category){
+              element.category = this.categories[0];
+            }
           });
           store.commit("addTransactions", response.data);
         })
