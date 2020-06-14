@@ -10,7 +10,7 @@
             <v-list-item-title>Dashboard</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-         <v-list-item :to="'Statistics'" link>
+        <v-list-item :to="'Statistics'" link>
           <v-list-item-action>
             <v-icon>mdi-chart-line</v-icon>
           </v-list-item-action>
@@ -37,7 +37,7 @@
     <router-view />
 
     <v-footer app>
-      <span>&copy; 2020</span>
+      <span>2020 || Marco Oliveira - 2192406 || Oleksandr Gevko - 2190272</span>
     </v-footer>
   </v-app>
 </template>
@@ -47,19 +47,23 @@
 export default {
   data: () => ({
     drawer: null,
-    title: "PeeBu",
+    title: "PeeBu"
   }),
   created() {
     this.$vuetify.theme.dark = true;
   },
   computed: {
     balance() {
-      let sum = this.$store.getters.transactionList.reduce(function(prevVal, elem) {
-        if(elem.type == "debit"){
-          return prevVal - parseFloat(elem.amount)
+      let sum = this.$store.getters.transactionList.reduce(function(
+        prevVal,
+        elem
+      ) {
+        if (elem.type == "debit") {
+          return prevVal - parseFloat(elem.amount);
         }
-        return prevVal + parseFloat(elem.amount)
-      }, 0);
+        return prevVal + parseFloat(elem.amount);
+      },
+      0);
       return Number.parseFloat(sum).toFixed(2);
     }
   }
