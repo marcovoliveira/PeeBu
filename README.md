@@ -4,7 +4,7 @@ Marco Oliveira - 2192406
 Oleksandr Gevko - 2190272
 
 JENKINS:  
-    Url: <http://34.90.164.128>  
+    Url: <http://34.90.73.82>  
     User: admin  
     Password: mx8+ESg+  
 
