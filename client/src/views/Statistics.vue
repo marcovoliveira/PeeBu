@@ -97,9 +97,13 @@
         <v-col>
           <v-card>
             <v-card-text v-if="chartReady">
-                <span id='chartData'
-                style="display:none">{{JSON.stringify(this.categories)}}</span>
-              <highcharts id="chartPie" class="chart" :alt="JSON.stringify(this.categories)" :options="chartOptions"></highcharts>
+              <span id="chartData" style="display:none">{{JSON.stringify(this.categories)}}</span>
+              <highcharts
+                id="chartPie"
+                class="chart"
+                :alt="JSON.stringify(this.categories)"
+                :options="chartOptions"
+              ></highcharts>
             </v-card-text>
           </v-card>
         </v-col>
@@ -184,8 +188,6 @@ export default {
       let arrayDebit = this.$store.getters.transactionList.filter(
         this.filterDebit
       );
-      console.log(arrayDebit);
-
       let categories = [];
       for (let i = 0; i < arrayDebit.length; i++) {
         let obj = categories.find(o => o.name === arrayDebit[i].category);

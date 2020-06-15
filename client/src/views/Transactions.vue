@@ -7,7 +7,11 @@
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
             <div v-on="on" v-bind="attrs">
-              <v-switch id="automatic" v-model="automaticCategorize" label="Automatic categorization"></v-switch>
+              <v-switch
+                id="automatic"
+                v-model="automaticCategorize"
+                label="Automatic categorization"
+              ></v-switch>
             </div>
           </template>
           <span>
@@ -223,17 +227,14 @@ export default {
       this.categoryColor = "info";
       this.categoryText = "Dialog opened";
     },
-    close() {
-      console.log("Dialog closed");
-    },
+    close() {},
     getTransactions() {
       const store = this.$store;
-      console.log("Get transactions");
       this.axios
         .get(store.getters.api)
         .then(response => {
           response.data.forEach(element => {
-            if(!element.category){
+            if (!element.category) {
               element.category = this.categories[0];
             }
           });
@@ -248,7 +249,6 @@ export default {
   },
   mounted() {
     const store = this.$store;
-    console.log(store.getters.transactionList);
     if (store.getters.transactionList < 1) {
       this.getTransactions();
     }
