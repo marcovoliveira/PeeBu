@@ -37,7 +37,7 @@
     <router-view />
 
     <v-footer app>
-      <span>2020 || Marco Oliveira - 2192406 || Oleksandr Gevko - 2190272</span>
+      <span>&copy; 2020</span>
     </v-footer>
   </v-app>
 </template>
